@@ -1,2 +1,57 @@
-# securebanking-core
-Securebanking core implementations library
+# Description
+Securebanking common cors repository consist of library that contains a collection of classes or interfaces which are used by many portions of the Secure Banking Access Tool Kit (SBAT).
+
+This library include functionalities used by the SBAT and is not related with a specific implementation of Open Banking specification.
+
+> Cross-origin resource sharing (CORS) is a standard mechanism that allows JavaScript XMLHttpRequest (XHR) calls executed in a web page to interact with resources from non-origin domains. CORS is a commonly implemented solution to the same-origin policy that is enforced by all browsers.
+
+## library purpose
+Collection of classes, interfaces, utils etc... to suply mechanisms to comply with CORS policies, for example a filter class to build properly the headers expected by the browser when a resource is served from a different domain it has been requested.
+
+## Technologies
+- Maven >=3.6
+- Java >=14
+- Spring framework (context) 5.2.10.RELEASE
+- Project Lombok (Slf4j) 1.18.20 to generate a logger field
+
+## Usage
+Import into your maven dependencies sections like this (use the latest released version);
+
+```
+   <dependencyManagement>
+        <dependencies>
+            <!-- Secure Banking: Open Banking UK common dependencies -->
+            <dependency>
+                <groupId>com.forgerock.securebanking.common</groupId>
+                <artifactId>securebanking-common-cors</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            ...
+        </dependencies>
+    </dependencyManagement>
+```
+
+### How to Build
+
+This is a Java Maven project. 
+
+#### Prerequisites
+You need the following on your development machine;
+- Java 14 or later
+- Maven 3.6.0 or later
+
+#### Building
+
+```shell
+git checkout git@github.com:SecureBankingAcceleratorToolkit/securebanking-common-cors.git
+cd securebanking-common-cors
+mvn clean install
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License 
+Released under an Apache 2.0 license
