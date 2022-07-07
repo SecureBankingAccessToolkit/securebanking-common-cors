@@ -6,13 +6,42 @@ This library include functionalities used by the SBAT and is not related with a 
 > Cross-origin resource sharing (CORS) is a standard mechanism that allows JavaScript XMLHttpRequest (XHR) calls executed in a web page to interact with resources from non-origin domains. CORS is a commonly implemented solution to the same-origin policy that is enforced by all browsers.
 
 ## library purpose
-Collection of classes, interfaces, utils etc... to suply mechanisms to comply with CORS policies, for example a filter class to build properly the headers expected by the browser when a resource is served from a different domain it has been requested.
+Collection of classes, interfaces, utils etc... to supply mechanisms to comply with CORS policies, for example a filter class to build properly the headers expected by the browser when a resource is served from a different domain it has been requested.
 
-## Technologies
-- Maven >=3.6
-- Java >=14
-- Spring framework (context) 5.2.10.RELEASE
-- Project Lombok (Slf4j) 1.18.20 to generate a logger field
+### Properties library configuration map
+| key                 | description                                    | default value |
+|---------------------|------------------------------------------------|---------------|
+| allowed_origins     | CORS Domains allowed (list)                    | localhost     |
+| allowed_headers     | Headers can be used (string)                   |               |
+| allowed_methods     | Allowed methods for preflight request (string) |               |
+| allowed_credentials | Credentials mode accepted (boolean)            | true          |
+| max_age             | Expiration time of preflight request (string)  | 3600          |
+
+All `securebanking-common-*` libraries use the configuration root key `common` to add under it his own properties structure.
+
+Example:
+````yaml
+common: # root key for all common 'securebanking-common-*' libraries
+  cors: # library name
+    allowed_origins:
+      - localhost
+      - forgerock.financial
+      - domain4test.com # don't delete it!
+    allowed_headers: accept-api-version, x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN, Id-Token
+    allowed_methods: GET, PUT, POST, DELETE, OPTIONS, PATCH
+    allowed_credentials: true # default value true
+    max_age: 3600 # default value 3600
+  otherCommonLibrary:
+    other_key: other_value
+    ....
+````
+### Components
+#### CorsFilter
+This filter on server-side performs filtering tasks to validate the multiple domains allowed for non-origin domain requests to comply with CORS policy.
+
+#### CorsConfigurationProperties
+To load the external properties with prefix `common.cors` from file and map them as properties object.
+See [Properties map](#properties-library-configuration-map)
 
 ## Usage
 Import into your maven dependencies sections like this (use the latest released version);
@@ -47,6 +76,7 @@ git checkout git@github.com:SecureBankingAcceleratorToolkit/securebanking-common
 cd securebanking-common-cors
 mvn clean install
 ```
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
