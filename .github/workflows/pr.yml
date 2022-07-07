@@ -1,0 +1,61 @@
+name: pull-request
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - README.md
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Check PR integrity
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup defaults action java and maven properties
+        uses: actions/setup-java@v1
+        with:
+          java-version: "14"
+          architecture: x64
+          server-id: maven.forgerock.org-community # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
+
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven2-${{ hashFiles('**/pom.xml') }}
+
+      - name: prepare artifact version
+        id: prepare
+        run: |
+          echo "::set-output name=artifact-version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+
+      - name: Set up forgerock maven snapshot repository
+        if: contains(steps.prepare.outputs.artifact-version, 'SNAPSHOT')
+        uses: actions/setup-java@v1
+        with: # add snapshots repository on the settings.xml
+          java-version: '14'
+          architecture: x64
+          server-id: maven.forgerock.org-community-snapshots # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
+
+      - name: Check Copyright
+        run: mvn license:check
+
+      - name: test
+        run: mvn clean verify
+
+      - name: Deploy artifact package
+        run: mvn -B deploy -DskipTests
+        env:
+          MAVEN_USERNAME: ${{ secrets.FR_ARTIFACTORY_USER }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.FR_ARTIFACTORY_TOKEN }}
+
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_ACCESS_TOKEN }}
