@@ -44,9 +44,7 @@ public class CorsConfigurationProperties {
     // CorsFilter
     @Value("${allowed_origins:localhost}")
     private List<String> allowedOrigins;
-    @Value("${allowed_headers}")
     private String allowedHeaders;
-    @Value("${allowed_methods}")
     private String allowedMethods;
     @Value("${allowed_credentials:true}")
     private boolean allowedCredentials;

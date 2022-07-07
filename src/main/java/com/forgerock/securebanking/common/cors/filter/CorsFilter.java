@@ -47,6 +47,11 @@ public class CorsFilter implements Filter {
 
     private final CorsConfigurationProperties filterConfigurationProperties;
 
+    @Override
+    public void init(FilterConfig filterConfig) {
+        log.info("### Initiating {} ###", this.getClass().getSimpleName());
+    }
+
     public CorsFilter(CorsConfigurationProperties filterConfigurationProperties) {
         this.filterConfigurationProperties = filterConfigurationProperties;
     }
@@ -58,14 +63,15 @@ public class CorsFilter implements Filter {
     /**
      * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
      */
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
 
         String methodName = "doFilter(servletRequest, servletResponse, chain)";
-
+        log.debug("{}: {}", this.getClass().getSimpleName(), methodName);
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         if (isCorsRequest(request)) {
-            log.debug("{} CORS HTTP Request method: {}", methodName, request.getMethod());
+            log.debug("{}: {} CORS HTTP Request method: {}", this.getClass().getSimpleName(), methodName, request.getMethod());
 
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             String originHeader = request.getHeader(HEADER_ORIGIN);
@@ -76,7 +82,7 @@ public class CorsFilter implements Filter {
             Optional originsFound = allowedOrigins.stream().filter(o -> o.endsWith(originUri.getHost())).findFirst();
 
             if (!originsFound.isPresent()) {
-                log.warn("{} Origin header host [{}] does not match the allowed origins [{}]", methodName, originUri.getHost(), allowedOrigins);
+                log.warn("{}: {} Origin header host [{}] does not match the allowed origins [{}]", this.getClass().getSimpleName(), methodName, originUri.getHost(), allowedOrigins);
                 response.setStatus(SC_UNAUTHORIZED);
                 return;
             }

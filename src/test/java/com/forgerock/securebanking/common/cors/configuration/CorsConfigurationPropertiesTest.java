@@ -20,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -31,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CorsConfigurationProperties.class, initializers = ConfigFileApplicationContextInitializer.class)
 @EnableConfigurationProperties(value = CorsConfigurationProperties.class)
+@ActiveProfiles("test")
 public class CorsConfigurationPropertiesTest {
     private static final String EXPECTED_ALLOWED_DOMAIN = "domain4test.com";
 
