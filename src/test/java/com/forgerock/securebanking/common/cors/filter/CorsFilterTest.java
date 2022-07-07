@@ -27,6 +27,7 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -44,6 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext
 @ContextConfiguration(classes = {CorsFilter.class}, initializers = ConfigFileApplicationContextInitializer.class)
 @EnableConfigurationProperties(value = CorsConfigurationProperties.class)
+@ActiveProfiles("test")
 public class CorsFilterTest {
 
     private static final String ORIGIN_DOMAIN = "https://domain4test.com";
