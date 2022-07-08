@@ -78,7 +78,7 @@ public class CorsFilter implements Filter {
 
             List<String> allowedOrigins = filterConfigurationProperties.getAllowedOrigins();
 
-            Optional originsFound = allowedOrigins.stream().filter(o -> o.endsWith(originUri.getHost())).findFirst();
+            Optional originsFound = allowedOrigins.stream().filter(o -> originUri.getHost().endsWith(o)).findFirst();
 
             if (!originsFound.isPresent()) {
                 log.warn("{}: {} Origin header host [{}] does not match the allowed origins [{}]", this.getClass().getSimpleName(), methodName, originUri.getHost(), allowedOrigins);
