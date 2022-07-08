@@ -68,7 +68,6 @@ public class CorsFilter implements Filter {
             throws IOException, ServletException {
 
         String methodName = "doFilter(servletRequest, servletResponse, chain)";
-        log.debug("{}: {}", this.getClass().getSimpleName(), methodName);
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         if (isCorsRequest(request)) {
             log.debug("{}: {} CORS HTTP Request method: {}", this.getClass().getSimpleName(), methodName, request.getMethod());
