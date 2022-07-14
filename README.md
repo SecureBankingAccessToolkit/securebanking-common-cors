@@ -17,6 +17,8 @@ Collection of classes, interfaces, utils etc... to supply mechanisms to comply w
 | allowed_credentials | Credentials mode accepted (boolean)            | true          |
 | max_age             | Expiration time of preflight request (string)  | 3600          |
 
+> For test purposes the CORS filter supports the value `"*"` to allow any origin
+
 All `securebanking-common-*` libraries use the configuration root key `common` to add under it his own properties structure.
 
 Example:
@@ -24,6 +26,7 @@ Example:
 common: # root key for all common 'securebanking-common-*' libraries
   cors: # library name
     allowed_origins:
+      - "*" # optional value to allow any origin domain
       - localhost
       - forgerock.financial
       - domain4test.com # don't delete it!

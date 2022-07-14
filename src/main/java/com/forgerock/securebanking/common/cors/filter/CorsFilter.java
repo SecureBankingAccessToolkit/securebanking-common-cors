@@ -46,6 +46,7 @@ import static org.springframework.http.HttpMethod.OPTIONS;
 public class CorsFilter implements Filter {
 
     private final CorsConfigurationProperties filterConfigurationProperties;
+    private static final String BY_PASS_VALUE = "*";
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -78,7 +79,13 @@ public class CorsFilter implements Filter {
 
             List<String> allowedOrigins = filterConfigurationProperties.getAllowedOrigins();
 
-            Optional originsFound = allowedOrigins.stream().filter(o -> originUri.getHost().endsWith(o)).findFirst();
+            Optional originsFound;
+
+            if(allowedOrigins.contains(BY_PASS_VALUE)) {
+                originsFound = Optional.of(BY_PASS_VALUE);
+            } else {
+                originsFound = allowedOrigins.stream().filter(o -> originUri.getHost().endsWith(o)).findFirst();
+            }
 
             if (!originsFound.isPresent()) {
                 log.warn("{}: {} Origin header host [{}] does not match the allowed origins [{}]", this.getClass().getSimpleName(), methodName, originUri.getHost(), allowedOrigins);
