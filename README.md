@@ -9,15 +9,15 @@ This library include functionalities used by the SBAT and is not related with a 
 Collection of classes, interfaces, utils etc... to supply mechanisms to comply with CORS policies, for example a filter class to build properly the headers expected by the browser when a resource is served from a different domain it has been requested.
 
 ### Properties library configuration map
-| key                 | description                                    | default value |
-|---------------------|------------------------------------------------|---------------|
-| allowed_origins     | CORS Domains allowed (list)                    | localhost     |
-| allowed_headers     | Headers can be used (string)                   |               |
-| allowed_methods     | Allowed methods for preflight request (string) |               |
-| allowed_credentials | Credentials mode accepted (boolean)            | true          |
-| max_age             | Expiration time of preflight request (string)  | 3600          |
+| key                 | description                                              | default value           |
+|---------------------|----------------------------------------------------------|-------------------------|
+| allowed_origins     | CORS Domains allowed (list) (optional)                   | "*" (allow all origins) |
+| allowed_headers     | Headers can be used (string)                             |                         |
+| allowed_methods     | Allowed methods for preflight request (string)           |                         |
+| allowed_credentials | Credentials mode accepted (boolean) (optional)           | true                    |
+| max_age             | Expiration time of preflight request (string) (optional) | 3600                    |
 
-> For test purposes the CORS filter supports the value `"*"` to allow any origin
+> For test purposes the CORS filter supports for default the value `"*"` to allow any origin. 
 
 All `securebanking-common-*` libraries use the configuration root key `common` to add under it his own properties structure.
 
