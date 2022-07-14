@@ -1,0 +1,8 @@
+common: # root key for all common 'securebanking-common-*' libraries
+  cors: # library name
+    #allowed_origins:
+      #- "*" # allow any origin
+    allowed_headers: accept-api-version, x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN, Id-Token
+    allowed_methods: GET, PUT, POST, DELETE, OPTIONS, PATCH
+    allowed_credentials: true # default value true
+    max_age: 3600 # default value 3600

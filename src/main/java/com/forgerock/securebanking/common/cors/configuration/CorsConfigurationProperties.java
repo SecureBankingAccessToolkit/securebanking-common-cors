@@ -33,6 +33,7 @@ public class CorsConfigurationProperties {
     common: # root key for all common 'securebanking-common-*' libraries
       cors: # library name
         allowed_origins: # the values could be a subdomain
+            - "*"
             - localhost
             - dev.forgerock.financial
             - forgerock.financial
@@ -42,7 +43,7 @@ public class CorsConfigurationProperties {
         max_age: 3600
      */
     // CorsFilter
-    @Value("${allowed_origins:localhost}")
+    @Value("${allowed_origins:*}")
     private List<String> allowedOrigins;
     private String allowedHeaders;
     private String allowedMethods;

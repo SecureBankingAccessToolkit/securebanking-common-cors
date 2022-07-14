@@ -23,7 +23,7 @@
     <groupId>com.forgerock.securebanking.common</groupId>
     <artifactId>securebanking-common-cors</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>Secure Banking access Toolkit common repository to supply cors mechanisms</name>
     <url>https://github.com/SecureBankingAccessToolkit/securebanking-common-cors</url>
